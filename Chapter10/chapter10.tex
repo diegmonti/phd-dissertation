@@ -1,0 +1,62 @@
+\chapter{Conclusion and Future Work}
+\label{chap:conclusion}
+
+This dissertation explored different challenges related to the offline evaluation of sequence-based and top-$k$ recommender systems. We proposed to adopt a multicriteria approach to mitigate the popularity bias introduced by many rating datasets and a robust evaluation protocol to ensure the reproducibility of the results. In~particular, we considered three main research lines: identifying the most appropriate metrics to evaluate a sequence-based recommender system, creating a protocol suitable for comparing ranked lists of suggestions, and analyzing the structure of rating datasets to understand their impact on the results of an offline trail.
+
+We proposed two evaluation protocols by formalizing their theoretical backgrounds and by also developing their software implementations. While relying on them, we studied a possible technique to visualize the internal structure of any rating dataset and we designed a method for generating synthetic collections of user preferences that could be successfully exploited to conduct offline evaluations. Finally, we applied our knowledge of multicriteria approaches to different use cases, by designing novel recommendation algorithms and assessing their performance.
+
+In detail, the main contributions of this dissertation are the following:
+
+\begin{itemize}
+\item A systematic literature review about multicriteria recommender systems, that was reported in Chapter~\ref{chap:multicriteria}.
+\item Sequeval, an offline evaluation protocol for sequence-based recommenders, introduced in Chapter~\ref{chap:sequeval}.
+\item A distributed approach to assess the quality of top-$k$ lists of suggestions, called RecLab and discussed in Chapter~\ref{chap:reclab}.
+\item RS-viz, a method for visualizing with a 3D scatter plot the ratings available in a dataset, that was presented in Chapter~\ref{chap:rs-viz}.
+\item A clustering technique capable of generating synthetic datasets in a realistic way starting from already existing ones, as shown in Chapter~\ref{chap:synthetic}.
+\item The evaluation of a recommender based on the entities mentioned in the reviews of the suggested items, described in Chapter~\ref{chap:semrevrec}.
+\item The creation of an RNN-based algorithm to suggest sequences of songs to be added to a playlist, that was outlined in Chapter~\ref{chap:challenge}.
+\end{itemize}
+
+The systematic literature review explored the topic of multicriteria recommenders, as defined by the structure of their users' preferences. We investigated the approaches currently available in literature and how they were evaluated, considering the protocols, the metrics, and the datasets. We discovered that it is not possible to directly compare different algorithms due to the variability in the evaluation methods adopted by the reviewed studies. Furthermore, the lack of publicly available rating datasets emerged as another critical point.
+
+Sequeval is an experimental protocol for performing the offline evaluation of sequence-based recommender systems. It exploits a multicriteria approach to analyze the suggested sequences from different angles, considering eight metrics. Therefore, the experimenter can select the most promising techniques according to the dimensions she considers the most relevant in a domain of interest. We conducted different experimental campaigns by relying on this framework and we observed that the results are adequate to identify the straights and weaknesses of the recommendation algorithms under investigation.
+
+A similar multifaceted set of metrics was exploited for creating RecLab, a method to evaluate top-$k$ recommender systems in a distributed fashion. By relying on widespread Web protocols, it is possible to assess in a reliable way different algorithms without exposing their implementation details. Please note that both frameworks are not bound to any particular rating dataset or splitting strategy. We empirically observed the effect of the configuration parameters of RecLab on the experimental results considering different domains and recommenders.
+
+To better interpret the results of an evaluation campaign, we proposed and prototyped RS-viz, an interactive visualization method for understanding the structure of the preferences available in a dataset. From the resulting plots, it is possible to intuitively observe unexpected statistical distributions, and, thus, being aware of the probable presence of an associated bias in the suggested items. We validated this hypothesis considering different versions of the LastFM dataset and the numerical results obtained from them with multiple recommenders.
+
+Because of the scarcity of publicly available collections of ratings highlighted by our systematic literature review, we designed a method to generate synthetic datasets that exhibit the same properties of existing ones. By relying on RecLab, we verified that this approach is useful to anonymize potentially private ratings while preserving the possibility of using them to successfully train a recommender system. In particular, we observed that the experimental results obtained when relying on the generated datasets are consistent with the ones of the reference datasets.
+
+We applied a multicriteria evaluation protocol to a recommender system based on the semantic annotation of user reviews, named SemRevRec. The motivating idea of this content-based approach is that users could explicitly mention items that are unexpected but also related with the initial one. Our offline study conducted in multiple domains showed that this method provides the best diversity among the considered approaches, while also increasing the precision of the suggestions with respect to another method based on Linked Data.
+
+Finally, in the context of the RecSys Challenge 2018, we designed a novel sequence-based recommender system based on Recurrent Neural Networks and text embeddings. The goal of this approach is to suggest how to complete a music playlist starting from a few seed songs and the title of the playlist. The proposed method was evaluated in a multicriteria fashion considering three metrics that were defined by the organizers of the challenge. Despite the high competitiveness of this field, our approach has been ranked in the first third of the leaderboard.
+
+The complete list of the publications describing the studies discussed in this dissertation is available in Appendix~\ref{chap:publications}.
+
+\section{Limitations}
+
+In the systematic literature review reported in Chapter~\ref{chap:multicriteria}, we considered as multicriteria only the recommender systems that are capable of exploiting a dataset containing multiple rating for each user--item pair, thus representing more complex user preferences. This strict choice was necessary to clearly define the scope of our investigation. Nevertheless, in the remainder of this dissertation we focused our attention on the experimental approaches for assessing existing algorithms and we mainly considered ``multicriteria'' as an evaluation technique based on multiple measures. Furthermore, the recommender discussed in Chapter~\ref{chap:challenge} could be considered a multicriteria one with respect to the content-based attributes of the items.
+
+Both Sequeval and RecLab rely on several recommendation performance objectives. However, the availability of many metrics may produce results which are difficult to interpret, especially if we are uncertain of what are the most relevant dimensions in our recommendation scenario. For this reason, it would be useful to define a way for summarizing the outcome of an evaluation campaign. More in general, this is a common limitation of offline experiments, and it needs to be addressed by analyzing the most promising algorithms in a subsequent online trail.
+
+Our visualization toolkit RS-viz was empirically validated by comparing the plots obtained from alternative versions of a rating dataset with the corresponding results of two offline trails involving multiple algorithms. However, we should confirm these results by conducting a user study to investigate if researchers and practitioners are able to correctly use it to explain the performance of different recommender systems in a particular domain.
+
+The approach proposed to generate synthetic datasets starting from an existing one is based on the K-means clustering algorithm. Even if we studied the impact of the value of $K$ on the recommendation results, additional work is required to better understand what is the optimal value for a certain domain. Furthermore, we should also investigate what is the effect of artificially increasing the number of users during the generation phase.
+
+\section{Future work}
+
+The offline comparison of different recommender systems is a challenging task that can be successfully completed only by understating the structure of the rating dataset, the impact of the evaluation protocol, and the meaning of the exploited metrics. Even if in an industrial setting the ultimate method for assessing a recommendation algorithm is studying its impact on company profits, there is anyway the need of conducting offline experiments for comparing a large number of alternatives or selecting the most promising configuration parameters.
+
+This dissertation discussed an evaluation framework for sequence-based recommender systems, a distributed approach for analyzing top-$k$ ranked lists of suggestions, a method for visualizing datasets of user preferences, and a generative approach for creating synthetic ratings. Nevertheless, the outcomes of these studies pose further research challenges that should be address by future works.
+
+Regarding both evaluation toolkits, we plan to study in more depth what are the relationships among the different metrics included in the frameworks, with the purpose of integrating them in a final value that expresses the overall quality of the recommender. Such a global score should be related to the recommendation scenario: for example, diversity may be important when recommending POIs to a tourist, but less useful in the music domain.
+
+Furthermore, it would be desirable to be able to create evaluation frameworks that are adopted by a community of researchers when testing their algorithms, harmonizing the evaluation protocols and the interpretation of the performance of the analyzed recommender systems. For this reason, it is necessary to identify and to include in them some additional meaningful datasets, related to different domains that could be exploited during the evaluation phase, as well as other baselines and novel recommendation methods.
+
+Finally, we would like to expand our evaluation frameworks to also support the online experimentation that should be performed after the offline analysis. The final goal of this dissertation is, in fact, to enable researchers to spend more time in realizing the recommendation algorithm as they can rely on an evaluation protocol that has already been designed and validated.
+
+With respect to RS-viz, we would like to quantitatively characterize rating datasets according to different dimensions and place them in various categories, for example by analyzing the diversity of user preferences or the tendency to rate popular items only. This empirical categorization would enable the users of our tool to better understand the ratings available and to select the most appropriate recommendation approach according to such proprieties.
+
+Furthermore, we would like to improve RS-viz by developing other visualization methods to enable more comprehensive analysis. Finally, additional studies are needed to better understand how the proposed approach could be extended for also visualizing non-conventional datasets, for example the ones enhanced with context-aware information like spatial and temporal data.
+
+Finally, there is the need of exploring additional methods for creating synthetic datasets. We believe that Generative Adversarial Networks (GANs) could be successfully exploited for this task, as they are already used to generate fake images starting from real ones~\cite{Goodfellow2014}. Such approaches would require the definition of a way for representing the preferences of a user similarly to an image.

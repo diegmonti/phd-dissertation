@@ -1,0 +1,195 @@
+% Metadata for PDF/A
+\begin{filecontents*}{\jobname.xmpdata}
+\Author{Diego Michele Monti}
+\Title{Multicriteria Evaluation for Top-k and Sequence-based Recommender Systems}
+\Subject{Doctoral dissertations in the SCUDO doctoral school}
+\Keywords{PDF\sep
+          PDF/A\sep
+          ISO 19005\sep
+          LaTeX\sep
+          PhD Thesis\sep
+          Engineering\sep
+          SCUDO}
+\Publisher{Politecnico di Torino}
+\end{filecontents*}
+
+\documentclass[%
+12pt,
+twoside,
+tipotesi=scudo,
+numerazioneromana,
+]{toptesi}
+
+\usepackage[a-1b]{pdfx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\errorcontextlines=9
+
+% Fonts
+\usepackage{lmodern}
+
+\makeindex[intoc]
+
+% Other packages
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{nameref}
+\usepackage{tikz}
+\usepackage{todonotes}
+\usepackage{changes}
+\usepackage{tabularx}
+\usepackage{algorithm}[chapter]
+\usepackage{algorithmic}
+\usepackage{rotating}
+
+% SLR
+\lstset{basicstyle=\ttfamily,breaklines=true,breakindent=0em,breakatwhitespace=true}
+
+\newcounter{papercounter}
+\newcommand{\paper}[1]{\refstepcounter{papercounter}\label{#1}P\arabic{papercounter}}
+
+\newcounter{papervalue}
+\newcommand{\pref}[1]{\setcounterref{papervalue}{#1}\hyperref[#1]{[P\arabic{papervalue}]}}
+
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1\unskip}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+
+% Sequeval
+\newtheorem{definition}{Definition}
+
+% RNN
+\newcommand{\qu}[1]{``{#1}''}
+
+% Algorithms
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+
+% Hyperref
+\unless\ifcsname ver@hyperref.sty\endcsname\usepackage{hyperref}\fi
+\hypersetup{%
+    pdfpagemode={UseOutlines},
+    bookmarksopen,
+    pdfstartview={FitH},
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+}
+
+\usepackage{indentfirst}
+\raggedbottom
+
+\begin{document}
+
+% First page
+\begin{ThesisTitlePage}
+
+\PhDschoolLogo{Logo-ScuDo-blu}
+\ProgramName{Computer and Control Engineering}
+\CycleNumber{32\textsuperscript{th}}
+
+\author{Diego Michele Monti}
+\title{Multicriteria Evaluation for\\Top-k and Sequence-based Recommender Systems}
+
+\NSupervisor{Supervisor:}{Supervisors:}
+\SupervisorNumber{2}
+\SupervisorList{Prof.~Maurizio Morisio, Supervisor\\
+Dr.~Giuseppe Rizzo, Co-supervisor}
+
+%\ExaminerList{%
+%Prof.~A.B., Referee, University of \dots\\
+%Prof.~C.D., Referee, University of \dots\\
+%Prof.~E.F., University of \dots\\
+%Prof.~G.H., University of \dots\\
+%Prof.~I.J., University of \dots}
+
+\Nlocation{Politecnico di Torino}
+\ExaminationDate{}
+
+\CClicence{%
+\noindent This dissertation is licensed under a Creative Commons Attribution -- NonCommercial -- NoDerivatives 4.0 International License. Visit \url{http://creativecommons.org/licenses/by-nc-nd/4.0/} to view a copy of this license.}
+
+\Disclaimer{%
+\noindent I hereby declare that, the contents and organisation of this dissertation constitute my own original work and does not compromise in any way the rights of third parties, including those relating to the security of personal data.	
+}
+
+\Signature{%
+\begin{flushright}
+\parbox{0.5\textwidth}{\centering
+%\dotfill\\
+Diego Michele Monti%\\
+%Turin, February 29, 2123
+}
+\end{flushright}
+}
+
+\end{ThesisTitlePage}
+
+\summary
+
+\paragraph{Context}
+
+The need of effectively identifying relevant items from a potentially overwhelming catalog has lead to the creation of automatic approaches for supporting users of online platforms in such a time-consuming task. Recommender systems are software tools and algorithms designed to suggest items to users according to their preferences. The traditional goal of the recommendation problem is to create a ranked list of suggestions for each user. However, a more novel paradigm is represented by algorithms capable of exploiting the temporal dimension of the available ratings, known as sequence-based recommender systems. Differently from the field of information retrieval, performing an offline experiment for comparing multiple recommendation approaches is a challenging task, as the ground truth is represented by the subjective preferences of the users collected before the introduction of the system under evaluation. Nevertheless, it represents a powerful tool for selecting the most promising approaches to be further tested in subsequent trails.
+
+\paragraph{Goal}
+
+In this dissertation, we study how to perform the offline evaluation of a generic recommender system by exploiting a multicriteria approach that relies on a set of heterogeneous metrics. We provide an answer to the following research questions: how already established metrics can be extended and adapted for evaluating a sequence-based recommender system; what is the most suitable protocol for performing an offline evaluation of a top-$k$ recommender system; and to what extend the structure of a rating dataset can influence the results of an offline evaluation.
+
+\paragraph{Method}
+
+Regarding the first question, we propose an evaluation framework called Sequeval designed to compare in a replicable way different sequence-based recommenders considering eight dimensions. With respect to the second question, we introduce RecLab, an evaluation toolkit designed following a distributed approach to overcome some limitations of the currently available evaluation solutions. Finally, for addressing the third question, we describe a method based on data visualization to explore the structure of a rating dataset and we report on an algorithm capable of generating alternative versions of an existing collection of ratings. Furthermore, we investigate the topic of multicriteria recommender systems more in general with a systematic literature review, also considering their evaluation protocols.
+
+\paragraph{Results}
+
+From the systematic literature review, we observed that is not possible to directly compare the results obtained with different multicriteria recommendation approaches due to the extreme variability in the reported experimental protocols. We exploited Sequeval and RecLab to successfully conduct some experimental campaigns involving different recommenders and datasets. The availability of multicriteria metrics enables the experimenter to obtain a more comprehensive picture of the systems under consideration. We validated our visualization method and generative approach by qualitatively and quantitatively comparing the results obtained with different rating datasets. Finally, we considered two novel recommendation approaches as possible use cases of multicriteria evaluation methods.
+
+\paragraph{Conclusion}
+
+In summary, this dissertation deals with the problem of conducting an offline comparison of recommender systems considering both traditional and sequential scenarios. We designed the proposed frameworks for addressing the most critical problems that emerged from literature, namely the non-reproducibility of the results, the comparability of different studies, and the bias of relying on a few metrics only. The software code of our frameworks is freely available on the Web in an attempt to foster further reuse and extension.
+
+%\emptypage
+%\acknowledgements
+
+%And I would like to acknowledge \dots
+
+\tablespagetrue\figurespagetrue
+
+\allcontents
+
+\mainmatter
+
+\include{Chapter01/chapter01}
+\include{Chapter02/chapter02}
+\include{Chapter03/chapter03}
+\include{Chapter04/chapter04}
+\include{Chapter05/chapter05}
+\include{Chapter06/chapter06}
+\include{Chapter07/chapter07}
+\include{Chapter08/chapter08}
+\include{Chapter09/chapter09}
+\include{Chapter10/chapter10}
+
+\appendix
+\include{Appendix01/appendix01}
+\include{Appendix02/appendix02}
+
+\backmatter
+
+\sloppy
+\printbibliography[heading=bibintoc]
+
+\printindex
+
+\end{document}

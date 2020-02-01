@@ -1,0 +1,139 @@
+\chapter{Background}
+\label{chap:background}
+
+Nowadays, the amount of information available on the Web is overwhelming. For this reason, the availability of tools capable of selecting from a huge catalog a short list of items that are of potential interest for a particular user is a critical success factor for almost any online platform. Therefore, recommender systems represent one of the technical solutions commonly employed in industry to address the issue of effectively exploring a vast horizon of possible choices.
+
+A related and equally popular approach is represented by search engines. Despite the common roots of these solutions, the task of evaluating with an offline experiment a recommender system is usually more challenging, as the ground truth is represented by subjective, and sometimes even emotional, preferences.
+
+In this chapter, we first review some of the recommendation approaches available in literature (Section~\ref{soa:sec:recommender}), then we discuss the main challenges associated with their offline evaluation (Section~\ref{soa:sec:evaluation}).
+
+\section{Recommender Systems}
+\label{soa:sec:recommender}
+
+According to Ricci et al.~\cite{Ricci2015}, recommender systems are software tools and algorithms designed to suggest items to users according to their preferences.
+
+In general, recommender systems can be classified in different categories based on the recommendation approach. The most widespread categories of recommender systems are content-based, collaborative filtering, knowledge-based, and hybrid~\cite{Adomavicius2005}. Content-based recommenders only rely on the past preferences of the current user in order to construct her profile and select suggested items. In contrast, collaborative filtering approaches analyze the behaviour of similar users for identifying candidate items. A knowledge-based recommender embeds domain-specific knowledge that is used for matching user requirements with items of potential interest. Finally, hybrid approaches combine in many different ways the previous methods. Other less common categories of recommender systems include community-based and demographic techniques~\cite{Burke2007}. A community-based recommender also considers the relationships of trust among its users, while a demographic recommender mainly relies on demographic profiles.
+
+A detailed analysis of the recommendation approaches available in literature is beyond the scope of this dissertation. Many authors already conducted different studies dealing with the topic of recommender systems. Park et al.~\cite{Park2012} reviewed hundreds of journal articles for analyzing the main application fields and data mining techniques exploited by different recommenders. Hong et al.~\cite{Hong2009} discussed the literature about context-aware recommenders, while Figueroa et al.~\cite{Figueroa2015} and Çano et al.~\cite{Cano2017} conducted systematic literature reviews about Linked Data and hybrid recommender systems respectively.
+
+More recently, Quadrana et al.~\cite{Quadrana2018} classified different approaches according to their capability of managing sequences of items. Portugal et al.~\cite{Portugal2018} reviewed commonly exploited machine learning techniques, while Zhang et al.~\cite{Zhang2019} discussed the most promising deep learning methods for generating personalized items.
+
+In the following, we briefly introduce a formal definition of the recommendation problem. Then, we review the recommendation approaches considered in this dissertation, that is sequential, review-based, and Linked Data-based ones. 
+
+\subsection{Traditional Recommender Systems}
+\label{soa:sec:traditional}
+
+Traditionally, recommender systems try to identify for each user an item that maximises the utility that she should gain from the consumption of that item. In other words, recommender systems estimate a utility function $R(\upsilon, \iota)$ that, given a user $\upsilon \in \mathcal{U}$ and an item $\iota \in \mathcal{I}$, predicts if $\iota$ should be recommended to $\upsilon$. In principle, the utility function could be an arbitrary function, including a profit function. The formal definition of this problem, as provided by Adomavicius and Tuzhilin~\cite{Adomavicius2015}, is reported in Equation~\ref{soa:eq:utility}.
+
+\begin{equation}
+\forall \upsilon \in \mathcal{U}, \quad \iota^{\prime}_{\upsilon} = \arg \max \limits_{\iota \in \mathcal{I}} R(\upsilon, \iota)
+\label{soa:eq:utility}
+\end{equation}
+
+In practice, users are commonly asked to quantify their preferences with numerical values, called ratings. For example, ratings could be the number of stars assigned to a product or the indication if they liked or not a movie. Therefore, the utility function $R$ is used by the system to calculate the ratings that users would probably assign to unknown items. Such a value measures the appropriateness of recommending an item to a certain user.
+
+The ratings already available can be represented as a matrix, similar to the one illustrated in Table~\ref{soa:tab:ratings}. In real systems, this matrix should be sparse, because the number of unknown cells is usually extremely elevated~\cite{Ricci2015}. In fact, users can provide ratings on a limited set of items, especially if the catalog is very large.
+
+\begin{table}
+\centering
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+        & Item\_1 & Item\_2 & Item\_3 & Item\_4 & Item\_5 \\ \midrule
+User\_1 & 5       & 3       & 4       & 4       & ?       \\
+User\_2 & ?       & 1       & ?       & 3       & 3       \\
+User\_3 & 4       & 3       & ?       & ?       & 5       \\
+User\_4 & 3       & ?       & 1       & ?       & ?       \\
+User\_5 & ?       & 5       & 5       & 2       & 1       \\ \bottomrule
+\end{tabular}
+\caption[Example of rating matrix]{An example of rating matrix. Unknown ratings are denoted with an interrogative mark.}
+\label{soa:tab:ratings}
+\end{table}
+
+Different approaches can be exploited to compute unknown ratings. For example, in a collaborative filtering setting, popular techniques include user-based or item-based K-NN and matrix factorization methods~\cite{Jannach2010}.
+
+Even if we presented the recommendation problem as the task of predicting unknown ratings, many commercial systems provide to each user a ranked list of suggestions. However, it is straightforward to obtain a top-$k$ list starting from the predicted ratings, as it is sufficient to sort them and select only the items with the highest computed values~\cite{Adomavicius2015}.
+
+\subsection{Sequential Recommender Systems}
+\label{soa:sec:sequential}
+
+A recommender system designed to consider the timestamp associated to user ratings can be defined as a sequential recommender~\cite{Quadrana2018}. In the following, we review some examples of sequential recommenders available in literature.
+
+Zhou et al.~\cite{Zhou2004} proposed a web recommender system based on a sequential pattern mining algorithm. The recommender is trained with the access logs of a website and its goal is to predict the pages that are likely to be visited by a certain user, given her previously visited pages. The authors proposed to store the model in a tree-like structure, relying on a technique originally designed for matching substrings over a finite alphabet of characters. A recommendation is then created by matching the sequence of pages already visited by the target user with the sequences previously analyzed by the algorithm.
+
+In the context of market basket analysis, it is also possible to exploit the sequence of previous transactions to predict what a customer is going to buy next~\cite{Aggarwal2015}. Rendle et al.~\cite{Rendle2010} proposed a method based on personalized transition graphs over Markov chains, while Wang et al.~\cite{Wang2015} designed a recommender capable of modeling both the sequential information from previous purchases and the overall preferences by a hybrid representation.
+
+Bellog\'in and S\'anchez~\cite{Bellogin2017a} proposed a similarity metric designed to compare users in the context of CF recommender systems. This metric takes into account the temporal sequence of users' ratings to identify common behaviors. The authors argue that it is possible to consider a sequence of items as a string, where each character represents an item, and compare them using the longest common subsequence algorithm~\cite{Hirschberg1975}.
+
+More recently, He et al.~\cite{He2017} introduced the concept of \emph{translation-based} recommendation. While a traditional recommender only considers the pairwise interactions between items and users, their idea is to model a third-order relationship among a user, the items she interacted with in the past, and the item she is going to visit next. Each user can be represented as a vector in a transition space: given the current item, it is possible to compute where the next one will be located. At recommendation time, it is possible to generate a list of suggested items by relying on a nearest-neighbor search.
+
+On the other hand, the task of generating recommendations of sequences was already discussed and presented in a seminal work by Herlocker et al.~\cite{Herlocker2004}. The authors suggested that it would be intriguing to be able to suggest, in the music domain, not only the songs that will be probably liked by a certain user, but also a playlist of songs that is globally pleasing. Moreover, they also proposed to apply this recommendation methodology in the context of scientific literature, where it is necessary to read a sequence of articles to become familiar with a certain topic.
+
+% Playlist recommendation
+The problem of recommending music songs was later addressed by Chen et al.~\cite{Chen2012}, who designed and implemented a recommender system capable of generating personalized playlists by modeling them as Markov chains. Their algorithm is capable of learning, from a set of training playlists, how to represent each song as a point in a latent space. Then, starting from a seed song, it is possible to create a playlist of an arbitrary length by repeatedly sampling the transition probabilities between adjacent songs. The resulting playlist is personalized because of the chosen seed. Furthermore, each user can influence the generation process by specifying some parameters: for example, a user might be more interested in popular songs, while another one in songs that are strictly related to the given seed.
+
+% Next POI recommendation
+Another typical application for a sequence-based recommender is the \emph{next} point-of-interest (POI) prediction problem~\cite{Quadrana2018}. Given some training sequences of previously liked geographical locations, this task consists of predicting a sequence of venues that is pleasing for a given user. Feng et al.~\cite{Feng2015} proposed an algorithm capable of creating sequences of POIs that have not been already visited. The authors developed a Metric Embedding algorithm that captures both the sequential information and individual preference. Such metric is then exploited to create a Markov chain model capable of representing the transition probabilities between a given POI and the next one. The key features that are implicitly considered in the embedding creation phase are the conceptual similarity and the geographical distance of the analyzed venues.
+
+A different line of research is represented by recommenders capable of analyzing sequences of multimedia objects. For example, Albanese et al.~\cite{Albanese2010} proposed a hybrid recommender system for retrieving multimedia content based on the theory of social choice and capable of exploiting, among other signals, the implicit browsing preferences of its users. Later, the authors of~\cite{Albanese2013} introduced a multimedia recommendation algorithm capable of combining semantic descriptors and usage patterns. The proposed approach can manage different media types and it enables users to explore several multimedia channels at the same time. Possible applications of such technologies are represented by browsing tools for virtual museums~\cite{Amato2017} and recommenders of cultural heritage sites~\cite{Su2019}.
+
+\subsection{Review-based Recommender Systems}
+\label{soa:sec:review-rs}
+
+The exploitation of user reviews in recommender systems is a well-known research topic, as reported by Cheng et al.~\cite{Chen2015}. Some techniques try to tackle the problem of building the profile of users by analyzing their reviews, while others focus on the identification of the main features of the items to recommend.
+
+Different strategies have been proposed in the literature to address the latter problem. Some researchers have suggested methods able to identify the sentiment associated with the features of an item exploiting a domain-specific ontology~\cite{Aciar2007} or its technical description~\cite{Yates2008}. A common aspect of these techniques is that the possible features are already available before performing the analysis. However, in literature there are also approaches for unsupervised extraction of product features and sentiment from reviews~\cite{Qiu2011, Somprasertsri2010}.
+
+Another possibility is to identify the main characteristics of an item with the help of natural language processing methods, without any previous knowledge of the context. For example, a popular technique considers bigrams that frequently occur in reviews and that are associated with a word expressing an emotion~\cite{Dong2013}. In this case, the goal of the recommender system is suggesting items with the same features of the ones liked by the target user, but with a better global sentiment. In the best of our knowledge, there is only one attempt to exploit user reviews for recommendation tasks using semantic annotation. Dzikowski et al.~\cite{Dzikowski2012} applied semantic annotation to reviews while users are editing them. Their goal was to produce annotated reviews of restaurants through Linked Data in order to generate tags to be associated with the reviewed items.
+
+\subsection{Linked Data-based Recommender Systems}
+\label{soa:sec:linked-data}
+
+In the past, some studies reviewed different Linked Data-based recommender systems that were proposed in literature~\cite{DiNoia2015, Figueroa2015}. Typically, these recommender systems consider the relationships among resources by taking into account the existing links in the Web of Data and use them to measure a semantic similarity. Such relationships can be direct links or paths between the items to recommend. In the following, we summarize the main works in this field. 
+
+Damljanovic et al.~\cite{Damljanovic2012} suggested domain experts in an open innovation scenario. Their approach generates recommendations by discovering related resources through hierarchical or transversal relationships in DBpedia. Passant~\cite{Passant2010} presented \emph{dbrec}, a music recommender system, which mainly relies on a measure named Linked Data Semantic Distance (LDSD). This measure is based on the number of direct and indirect links between two resources. Heitmann and Hayes~\cite{Heitmann2010} also proposed a recommender system which exploited Linked Data to mitigate the new-user, new-item and sparsity problems of collaborative recommender systems.
+
+More recently, Musto et al.~\cite{Musto2016} studied the impact of the knowledge available in the Web of Data on the overall performance of a graph-based recommendation algorithm. Vagliano et al.~\cite{Vagliano2016} presented a recommendation algorithm based on Linked Data which exploits existing relationships between resources by dynamically analyzing both their categories and their explicit references to other resources. Di Noia et al.~\cite{DiNoia2012} described a model-based approach to provide content-based recommendations with Linked Data. Ostuni et al.~\cite{Ostuni2014} defined a neighborhood-based graph kernel for matching graph-based item representations. Di Noia et al.~\cite{DiNoia2016} introduced SPrank, a hybrid algorithm which extracts semantic path-based features from DBpedia and computes recommendations using Learning to Rank.
+
+\section{Offline Evaluation}
+\label{soa:sec:evaluation}
+
+To the best of our knowledge, the first survey that deals with the problem of evaluating a recommender system was conducted by Herlocker et al.~\cite{Herlocker2004}. In their work, the authors discuss when it is appropriate to perform an offline evaluation and when it is necessary to carry on an online, or in~vivo, experiment. The former is particularly useful to select a small set of potentially good candidates that will be further compared in a real scenario. However, to be complete and trustworthy, such an evaluation needs to rely on a set of well-defined metrics, that should be able to capture all characteristics of the recommended items.
+
+In the following, we introduce the problem of experimental reproducibility, then we explain why it is necessary to consider a multicriteria set of metrics for conducting a reliable evaluation. Finally, we review existing visualization and generative approaches in the context of rating datasets.
+
+\subsection{Experimental Reproducibility}
+
+Different authors analyzed the experimental reproducibility of offline evaluations in the context of recommender systems. For example, Jannach et al.~\cite{Jannach2015} compared several recommendation algorithms in an offline experiment, analyzing their performance by relying on a comprehensive evaluation framework. The authors considered different splitting protocols and metrics, designed to characterize both the accuracy, in terms of rating and ranking, and the coverage of the suggested items. The results of the experimental trails suggest that some common algorithms, despite their high accuracy, tend to only recommend popular items that are probably not very interesting for the users of a real system. This problem is related to the popularity biases introduced by the offline evaluation protocol: for this reason, it is not advisable to compare different algorithms by relying only on measures related to their accuracy. In addition, different splitting protocols produce significantly different and non-comparable outcomes.
+
+Gunawardana and Shani~\cite{Gunawardana2015} proposed a set of general guidelines for designing experiments with the purpose of evaluating recommender systems. Such experiments can be classified as offline trails, user studies, or online analysis that involve a live system. Several properties of a recommender system can be evaluated: for example, the most common ones are user preference, prediction accuracy, coverage, and utility. The authors argue that the possibility of measuring these properties is strongly influenced by the kind of study and, in the most extreme scenario, some of them cannot be obtained. For example, it is very difficult to measure users' preference in an offline setting.
+
+For each property, different commonly exploited metrics are presented and discussed. Even if the main metrics proposed for evaluating the most popular properties are widely known and understood, usually there is little agreement about the most appropriate metrics for characterizing the least common properties. For example, several definitions, and several metrics, related to the property of utility are available in the literature. The authors also point out that a key decision of offline experiment design is the splitting protocol because this choice will greatly influence the final outcome of the measures.
+
+Bellog\'in et al.~\cite{Bellogin2017} proposed an evaluation framework designed following the methodologies of the information retrieval field. They suggest that the evaluation procedures available in information retrieval are widespread: for this reason, they could be successfully exploited by the recommender systems community to create a shared evaluation protocol based on ranking, as this setting is more similar to the one of a live system. Unfortunately, three different design decisions need to be taken to achieve this goal.
+
+The items considered for the evaluation could be all items available in the dataset, or only the items available in the test set. The non-relevant items for a certain user could be represented by all items in the test set not rated by that user, or by a subset of it with a fixed size. Finally, the global metric could be computed by averaging its value on all users, or on all ratings available in the test set. Different design choices will result in different evaluation protocols and results. The authors also identify two sources of biases in offline evaluations protocols: the sparsity bias and the popularity bias.
+
+Several software tools are available with the purpose of simplifying the process of comparing the performance of recommendation algorithms. They typically include some evaluation protocols and a reference implementation of well-known techniques. Said and Bellog\'in~\cite{Said2014} compared several of these tools to check if their results are consistent. They discovered that the values obtained with the same dataset and algorithm may vary significantly among different frameworks. For this reason, it is not feasible to directly compare the scores reported by these tools, because they are obtained relying on several protocols. The discrepancies reported by the authors are mainly caused by the data splitting protocol, the strategy used to generate the candidate items, and the implementation choices related to the evaluation metrics.
+
+\subsection{Beyond Accuracy}
+\label{soa:sec:beyond}
+
+In their survey dealing with the problem of evaluating a recommender system, Herlocker et al.~\cite{Herlocker2004} review several accuracy metrics usually exploited by different authors and they classify them into three categories: predictive accuracy metrics, classification accuracy metrics, and rank accuracy metrics. These groups are strictly related to the purpose of the recommender system: predicting a rating for each user-item pair, identifying an item as appropriate or not for a user, and creating an ordered list of recommended items for a user. After discussing the accuracy-based metrics, they argue that, in order to draw a reliable conclusion, it is necessary to also consider other properties of the recommended items. In their opinion, a recommender system should be capable of providing suggestions that are not only accurate but also useful. For example, an extremely popular item may be an accurate but not an interesting suggestion. For this reason, they also discuss other metrics that could be considered beyond the traditional concept of accuracy, such as coverage, learning rate, novelty, serendipity, and confidence.
+
+The idea of relying not only on accuracy-based metrics is also supported by Ge et al.~\cite{Ge2010}. In their work, the authors state that the purpose of an evaluation protocol is to assess the quality of the recommended items and not their accuracy. However, metrics like precision and recall alone are not capable of verifying that the recommendations are actually useful. In fact, only the users of the system can judge their quality in the context of an online experiment. Therefore, their suggestion is to consider a multicriteria set of metrics and not only accuracy when it is necessary to perform an offline study.
+
+\subsection{Visualization Approaches}
+
+Different authors have proposed to create interactive visualizations for qualitative evaluating the goodness of the recommended items or helping the users to identify the most relevant suggestions. For example, Kunkel et al.~\cite{Kunkel2017} created a 3D map-based visualization that represents the preferences of a user on the entire space of items. The user can inspect the profile created by the recommender and also manually modify it, if necessary.
+
+\c{C}oba et al.~\cite{Coba2017} extended the \textit{rrecsys} library by adding to it graphical capabilities for performing an offline visual evaluation of different recommendation approaches with respect to the popularity of the suggested items. Gil et al.~\cite{Gil2018} introduced VisualRS, a tool capable of creating tree graph structures for exploring the most important relationships between items or users. The graph-based visualization is useful for comparing the results of different recommendation approaches and selecting the most appropriate one for a given task. In contrast, Cardoso et al.~\cite{Cardoso2019} proposed to combine the output of different recommender systems with human-generated data to allow users to explore the suggested items in an effective way. This method could also be exploited to compare the results of different recommender systems in a qualitative way.
+
+\subsection{Synthetic Datasets}
+
+Synthetic datasets are commonly used in literature to assess the performance of database systems or to study the behavior of data mining algorithms. For example, Agrawal et al.~\cite{Agrawal1994} created a generator of retail transactions intended for the evaluation of association rule algorithms, while Houkj{\ae}r et al.~\cite{Houkjaer2006} introduced a software capable of creating relational data for benchmarking purposes. Such tools can generate realistic data in terms of their statistical distributions, which can be empirically learned for existing datasets or provided by a researcher using domain-specific languages.
+
+Similar approaches have been also explored in the field of recommender systems, usually because of the lack of public datasets with the required characteristics. Tso et al.~\cite{Tso2006} created a synthetic data generator for evaluating context-aware recommenders based on Dirichlet and Chi-square distributions. The metric of information entropy is then exploited to control the randomness of the synthetic data. A similar method has been discussed by Pasinato et al.~\cite{Pasinato2013}: their intuition is to represent the heterogeneous rating behaviors of the users with different statistical distributions.
+
+Manouselis et al.~\cite{Manouselis2008} presented a tool, named CollaFis, capable of creating synthetic ratings for the evaluation of either single-criteria or multi-criteria recommender systems. The users of CollaFis need to specify the characteristics of the generated data, like the number of users, items, and criteria. A common aspect of all the previously mentioned methods is that researchers are required to choose and configure the statistical distributions that are exploited to generate the artificial datasets. However, the main problem of such an approach is that it is impossible to predict the real behavior of many different users with a few statistical distributions~\cite{Montaner2004}.
+
+Another possible line of research is related to the imitation of a real collection of preferences. For example, Rodr{\'i}guez-Hern{\'a}ndez et al.~\cite{CarmenRodriguez-Hernandez2017} developed a software, DataGenCARS, for creating artificial ratings using a set of parameters provided by the user or inferred from a reference dataset. However, in Chapter~\ref{chap:synthetic}, we argue that statistics computed at a global level are not informative enough to create a synthetic dataset, as they are not able to capture the different behaviors of the various groups of users.
