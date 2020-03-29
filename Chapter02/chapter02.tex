@@ -23,7 +23,7 @@ In the following, we briefly introduce a formal definition of the recommendation
 \subsection{Traditional Recommender Systems}
 \label{soa:sec:traditional}
 
-Traditionally, recommender systems try to identify for each user an item that maximises the utility that she should gain from the consumption of that item. In other words, recommender systems estimate a utility function $R(\upsilon, \iota)$ that, given a user $\upsilon \in \mathcal{U}$ and an item $\iota \in \mathcal{I}$, predicts if $\iota$ should be recommended to $\upsilon$. In principle, the utility function could be an arbitrary function, including a profit function. The formal definition of this problem, as provided by Adomavicius and Tuzhilin~\cite{Adomavicius2015}, is reported in Equation~\ref{soa:eq:utility}.
+Traditionally, recommender systems try to identify for each user an item that maximises the utility that she should gain from the consumption of that item~\cite{Bobadilla2013}. In other words, recommender systems estimate a utility function $R(\upsilon, \iota)$ that, given a user $\upsilon \in \mathcal{U}$ and an item $\iota \in \mathcal{I}$, predicts if $\iota$ should be recommended to $\upsilon$. In principle, the utility function could be an arbitrary function, including a profit function. The formal definition of this problem, as provided by Adomavicius \& Tuzhilin~\cite{Adomavicius2015}, is reported in Equation~\ref{soa:eq:utility}.
 
 \begin{equation}
 \forall \upsilon \in \mathcal{U}, \quad \iota^{\prime}_{\upsilon} = \arg \max \limits_{\iota \in \mathcal{I}} R(\upsilon, \iota)
@@ -51,7 +51,7 @@ User\_5 & ?       & 5       & 5       & 2       & 1       \\ \bottomrule
 
 Different approaches can be exploited to compute unknown ratings. For example, in a collaborative filtering setting, popular techniques include user-based or item-based K-NN and matrix factorization methods~\cite{Jannach2010}.
 
-Even if we presented the recommendation problem as the task of predicting unknown ratings, many commercial systems provide to each user a ranked list of suggestions. However, it is straightforward to obtain a top-$k$ list starting from the predicted ratings, as it is sufficient to sort them and select only the items with the highest computed values~\cite{Adomavicius2015}.
+Even if we presented the recommendation problem as the task of predicting unknown ratings, many commercial systems provide to each user a ranked list of suggestions~\cite{Lu2015}. However, it is straightforward to obtain a top-$k$ list starting from the predicted ratings, as it is sufficient to sort them and select only the items with the highest computed values~\cite{Adomavicius2015}.
 
 \subsection{Sequential Recommender Systems}
 \label{soa:sec:sequential}
