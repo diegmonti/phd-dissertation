@@ -20,9 +20,9 @@ As discussed in Section~\ref{soa:sec:evaluation}, several evaluation protocols a
 In our view, an evaluation framework consists of a methodology for performing an experimental comparison, a set of metrics, and a software tool that implements them. The main aim of this chapter is to address the following research questions and to introduce an offline evaluation framework for sequence-based recommender systems that we called Sequeval.
 
 \begin{description}
-\item[RQ1\label{seq:itm:rq1}] What is the formal definition of a sequence-based recommender system?
-\item[RQ2\label{seq:itm:rq2}] How already established metrics can be extended and adapted for evaluating a sequence-based recommender system?
-\item[RQ3\label{seq:itm:rq3}] Against which baselines a sequence-based recommender system can be compared?
+\item[RQ2.1\label{seq:itm:rq1}] What is the formal definition of a sequence-based recommender system?
+\item[RQ2.2\label{seq:itm:rq2}] How already established metrics can be extended and adapted for evaluating a sequence-based recommender system?
+\item[RQ2.3\label{seq:itm:rq3}] Against which baselines a sequence-based recommender system can be compared?
 \end{description}
 
 Because our evaluation approach is agnostic with respect to the implementation details of the algorithms under analysis, it can be successfully exploited to also assess the performance of systems based on alternative recommendation methods~\cite{Costa2011} or dealing with unconventional categories of items, for example 3D movies~\cite{Pouli2015} or cultural digital contents~\cite{Albanese2011}, especially if they are supposed to be consumed by users in a sequential order. Besides, by openly releasing a Python implementation of Sequeval, we aim to encourage the use of the proposed framework as an attempt to standardize the evaluation of sequence-based recommender systems, mitigating the comparability problem in recommendation research.

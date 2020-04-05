@@ -14,12 +14,19 @@ In this chapter, we propose a novel qualitative approach based on data visualiza
 
 Differently from the plotting capabilities already available in specialized software like Matlab or Scilab, our approach is more general, as it can be applied in a consistent way by different users on any dataset and it can be exploited on many devices without the need of installing specific tools.
 
-The remainder of this chapter is structured as follows: in Section~\ref{viz:sec:visualization} we present the approach used to construct the scatter plot and we describe the implementation details of the Web-based tool RS-viz. In Section~\ref{viz:sec:evaluation}, we comment on the outcome of an evaluation campaign designed to validate the proposed method. Finally, in Section~\ref{viz:sec:conclusion}, we provide the conclusions.
+\added{More formally, we aim to provide an answer to the following research questions.}
+
+\begin{description}
+\item[RQ4.1\label{viz:itm:rq1}] \added{How can data visualization techniques be exploited to create a graphical summary of the main characteristics of a rating dataset?}
+\item[RQ4.2\label{viz:itm:rq2}] \added{To what extent the graphical representation of different rating datasets can be useful to easily identity their similarities and diversities?}
+\end{description}
+
+The remainder of this chapter is structured as follows. In Section~\ref{viz:sec:visualization} we present the approach used to construct the scatter plot and we describe the implementation details of the Web-based tool RS-viz. In Section~\ref{viz:sec:evaluation}, we comment on the outcome of an evaluation campaign designed to validate the proposed method. Finally, in Section~\ref{viz:sec:conclusion}, we provide the conclusions.
 
 \section{Visualization Approach}
 \label{viz:sec:visualization}
 
-In this section, we first describe the algorithm that we devised for creating a scatter plot that represents a rating dataset (Section~\ref{viz:sec:scatter}), then we introduce the implementation details of RS-viz (Section~\ref{viz:sec:implementation}).
+In this section, we first describe the algorithm that we devised \added{as an answer to~\ref{viz:itm:rq1}} for creating a scatter plot that represents a rating dataset (Section~\ref{viz:sec:scatter}), then we introduce the implementation details of RS-viz (Section~\ref{viz:sec:implementation}).
 
 \subsection{Scatter Plot Construction}
 \label{viz:sec:scatter}
@@ -151,6 +158,8 @@ If we increase the value of the rating threshold, we can observe that the result
 From the numerical outcomes of the experiments, we can deduce that the User KNN and WRMF algorithms are the most appropriate ones with both the different rating thresholds. In general, all the recommenders available perform worse with a higher threshold. In fact, from the visualizations it is clear that the number of available preferences is much lower with respect to the MovieLens~100K dataset, as the scatter plot represented in Figure~\ref{viz:fig:lastfm-t1k} is sparser than the one available in Figure~\ref{viz:fig:ml-100k}. Because user preferences are more limited in number and fragmented, the task of any recommender system is necessarily harder.
 
 Interestingly, the Item KNN, differently from the User KNN, experienced a dramatic drop in all the metrics considered. This result may have been caused by the fact that a very low number of users is available for each item of the dataset. Also this characteristic can be observed from the generated scatter plot by looking at the lower part of Figure~\ref{viz:fig:lastfm-t1k}. The white horizontal stripes denote groups of items that have been rated by only a few very active users.
+
+\added{These experimental results support the validity of our visualization approach and they represent our answer to~\ref{viz:itm:rq2}.}
 
 \section{Conclusion}
 \label{viz:sec:conclusion}

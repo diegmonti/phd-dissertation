@@ -12,6 +12,14 @@ The responsibilities of the evaluator and the recommender are clearly separated 
 
 The configuration parameters of each experiment are left to the user of the toolkit, who is free to choose the dataset, the splitting strategy, the size of the test set, the length $k$ of the recommended lists, and the rating threshold between relevant and irrelevant items. The experiment can be designed and run by simply interacting with a web-based GUI provided by the toolkit. Other researchers can easily plug their recommender systems into the evaluation pipeline by implementing the APIs defined by RecLab and by deploying them on a server. Thanks to this approach, it is possible to compare, in a controlled environment, different algorithms and techniques without necessary disclosing their implementation details. The results of each experiment, along with the respective configuration parameters, are publicly available to support accountability and comparative analyses of the results.
 
+\added{More formally, we aim to provide an answer to the following research questions.}
+
+\begin{description}
+\item[RQ3.1\label{lab:itm:rq1}] \added{How can different top-$k$ recommender systems be fairly compared in heterogeneous settings without necessary exposing their algorithms?}
+\item[RQ3.2\label{lab:itm:rq2}] \added{To what extent it is possible to support the reproducibility of the experiments and the accountability of the results?}
+\item[RQ3.3\label{lab:itm:rq3}] \added{How can the availability of different metrics support the experimenter in the interpretation of the obtained results?}
+\end{description}
+
 The remainder of this chapter is structured as follows. In Section~\ref{lab:sec:framework} we introduce the main design choices behind our evaluation framework, while in Section~\ref{lab:sec:interaction} we describe how different recommenders can interact with the evaluator. In Section~\ref{lab:sec:metrics} we explain the mathematical details of the metrics computed during the evaluation phase. We present and discuss our results in Section~\ref{lab:sec:results} and, in Section~\ref{lab:sec:conclusion}, we provide the conclusions.
 
 \section{RecLab Evaluation Framework}
@@ -56,7 +64,7 @@ Furthermore, we have included the MyMediaLite~\cite{Gantner2011} implementations
 \label{lab:fig:sequence}
 \end{figure}
 
-RecLab is a distributed evaluation framework. For this reason, it exploits consolidated web standards to create a communication channel among itself and the recommenders under analysis: the overall protocol is graphically depicted as a UML sequence diagram in Figure~\ref{lab:fig:sequence}. This interaction is initiated when the experimenter decides to execute a new evaluation, and it is repeated for every recommender selected as part of it.
+RecLab is a distributed evaluation framework. For this reason, it exploits consolidated web standards to create a communication channel among itself and the recommenders under analysis: the overall protocol is graphically depicted as a UML sequence diagram in Figure~\ref{lab:fig:sequence} \added{and it represents our answer to~\ref{lab:itm:rq1}}. This interaction is initiated when the experimenter decides to execute a new evaluation, and it is repeated for every recommender selected as part of it.
 
 First, the evaluator requests the recommender to train a new recommendation model with a \textsc{post} on the resource \texttt{/model}. It provides to the recommender a URI from which it can download the training set and the rating threshold, as specified by the experimenter. Only the ratings with a value strictly greater than the threshold should be considered as positive feedbacks.
 
@@ -195,7 +203,7 @@ WRMF         & 0.015617 & 0.164809  & 0.170302 & 0.201023 & 8.849644 & 0.763729 
 \label{lab:tab:lastfm}
 \end{sidewaystable}
 
-To prove the effectiveness of RecLab, we performed three different experiments with the recommender systems described in Section~\ref{lab:sec:framework} whose implementation details are available in our repository.
+To prove the effectiveness of RecLab, we performed three different experiments with the recommender systems described in Section~\ref{lab:sec:framework} whose implementation details are available in our repository, \added{in line with~\ref{lab:itm:rq2}}.
 
 In the first one, we selected the MovieLens 1M dataset and we chose a random splitting protocol. For the other parameters, we used the default values of the framework: the test set size is the 20\% of the dataset, the length $k$ of the recommended lists is equal to $10$, while the rating threshold is equal to $3$. The results of this first experiment are reported in Table~\ref{lab:tab:movielens-random}.
 
@@ -210,6 +218,8 @@ The measures of serendipity are not exactly zero because this implementation of 
 If we ignore the random suggestions, the Item KNN recommender obtains the best results in terms of coverage, novelty, and diversity in all the experiments. Regarding the metric of precision, we observe interesting results with the User KNN recommender in the first experiment, with the User KNN and the WRMF in the second one, and with the WRMF in the last one. We observe a dramatic decrease in precision of the BPRMF recommender in the LastFM experiment, probably due to the characteristics of the dataset.
 
 In the last experiment, the WRMF algorithm achieves the best values of precision, recall, NDCG, and serendipity. However, it also scores a very low coverage; in contrast, the Item KNN recommender has a fair precision and an interesting coverage. For this reason, it would be useful to compare these algorithms in an online experiment involving human subjects.
+
+\added{The availability of different evaluation metrics was of paramount importance to reach these conclusions, which represent our answer to~\ref{lab:itm:rq3}.}
 
 \section{Conclusion}
 \label{lab:sec:conclusion}
