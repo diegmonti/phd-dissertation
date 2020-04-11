@@ -12,13 +12,27 @@ In this chapter, we first review some of the recommendation approaches available
 
 According to Ricci et al.~\cite{Ricci2015}, recommender systems are software tools and algorithms designed to suggest items to users according to their preferences.
 
-In general, recommender systems can be classified in different categories based on the recommendation approach. The most widespread categories of recommender systems are content-based, collaborative filtering, knowledge-based, and hybrid~\cite{Adomavicius2005}. Content-based recommenders only rely on the past preferences of the current user in order to construct her profile and select suggested items. In contrast, collaborative filtering approaches analyze the behaviour of similar users for identifying candidate items. A knowledge-based recommender embeds domain-specific knowledge that is used for matching user requirements with items of potential interest. Finally, hybrid approaches combine in many different ways the previous methods. Other less common categories of recommender systems include community-based and demographic techniques~\cite{Burke2007}. A community-based recommender also considers the relationships of trust among its users, while a demographic recommender mainly relies on demographic profiles.
+In general, recommender systems can be classified in different categories based on the recommendation approach. The most widespread categories of recommender systems are content-based, collaborative filtering, knowledge-based, and hybrid~\cite{Adomavicius2005}, \added{as summarized in Table~\ref{soa:tab:methods}}. Content-based recommenders only rely on the past preferences of the current user in order to construct her profile and select suggested items. In contrast, collaborative filtering approaches analyze the behaviour of similar users for identifying candidate items. A knowledge-based recommender embeds domain-specific knowledge that is used for matching user requirements with items of potential interest. Finally, hybrid approaches combine in many different ways the previous methods. Other less common categories of recommender systems include community-based and demographic techniques~\cite{Burke2007}. A community-based recommender also considers the relationships of trust among its users, while a demographic recommender mainly relies on demographic profiles.
+
+\begin{table}
+\centering
+\begin{tabular}{@{}lp{4cm}p{4cm}@{}}
+\toprule
+Method & Advantages & Disadvantages \\ \midrule
+Content-based & Transparency, limited privacy issues & Requires a description of the items \\
+Collaborative filtering & Scalability, only based on ratings & Data sparsity and cold start problems \\
+Knowledge-based & No interaction history required & Difficult to the create the model \\
+Hybrid & Combines multiple approaches together & Limited performance \\ \bottomrule
+\end{tabular}
+\caption[Comparison of recommendation techniques]{\added{Comparison of the advantages and disadvantages of the recommendation techniques mentioned in~\cite{Adomavicius2005}.}}
+\label{soa:tab:methods}
+\end{table}
 
 A detailed analysis of the recommendation approaches available in literature is beyond the scope of this dissertation. Many authors already conducted different studies dealing with the topic of recommender systems. Park et al.~\cite{Park2012} reviewed hundreds of journal articles for analyzing the main application fields and data mining techniques exploited by different recommenders. Hong et al.~\cite{Hong2009} discussed the literature about context-aware recommenders, while Figueroa et al.~\cite{Figueroa2015} and Çano et al.~\cite{Cano2017} conducted systematic literature reviews about Linked Data and hybrid recommender systems respectively.
 
 More recently, Quadrana et al.~\cite{Quadrana2018} classified different approaches according to their capability of managing sequences of items. Portugal et al.~\cite{Portugal2018} reviewed commonly exploited machine learning techniques, while Zhang et al.~\cite{Zhang2019} discussed the most promising deep learning methods for generating personalized items.
 
-In the following, we briefly introduce a formal definition of the recommendation problem. Then, we review the recommendation approaches considered in this dissertation, that is sequential, review-based, and Linked Data-based ones. 
+In the following, we briefly introduce a formal definition of the recommendation problem. Then, we review the recommendation approaches considered in this dissertation, that is \added{top-$k$,} sequential, review-based, and Linked Data-based ones. \added{Please note that sequence-based recommender systems are a particular kind of sequential recommenders and they will be defined later in Section~\ref{seq:sec:sequence-based}.}
 
 \subsection{Top-k Recommender Systems}
 \label{soa:sec:topk}
@@ -38,12 +52,12 @@ The ratings already available can be represented as a matrix, similar to the one
 \centering
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-        & Item\_1 & Item\_2 & Item\_3 & Item\_4 & Item\_5 \\ \midrule
-User\_1 & 5       & 3       & 4       & 4       & ?       \\
-User\_2 & ?       & 1       & ?       & 3       & 3       \\
-User\_3 & 4       & 3       & ?       & ?       & 5       \\
-User\_4 & 3       & ?       & 1       & ?       & ?       \\
-User\_5 & ?       & 5       & 5       & 2       & 1       \\ \bottomrule
+& \texttt{Item\_1} & \texttt{Item\_2} & \texttt{Item\_3} & \texttt{Item\_4} & \texttt{Item\_5} \\ \midrule
+\texttt{User\_1} & \texttt{5} & \texttt{3} & \texttt{4} & \texttt{4} & \texttt{?} \\
+\texttt{User\_2} & \texttt{?} & \texttt{1} & \texttt{?} & \texttt{3} & \texttt{3} \\
+\texttt{User\_3} & \texttt{4} & \texttt{3} & \texttt{?} & \texttt{?} & \texttt{5} \\
+\texttt{User\_4} & \texttt{3} & \texttt{?} & \texttt{1} & \texttt{?} & \texttt{?} \\
+\texttt{User\_5} & \texttt{?} & \texttt{5} & \texttt{5} & \texttt{2} & \texttt{1} \\ \bottomrule
 \end{tabular}
 \caption[Example of rating matrix]{An example of rating matrix. Unknown ratings are denoted with an interrogative mark.}
 \label{soa:tab:ratings}
