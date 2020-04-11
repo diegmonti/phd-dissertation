@@ -1,7 +1,9 @@
 \chapter{Introduction}
 \graphicspath{{Chapter01/Figures/}}
 
-Due to the large variety of products and digital content available on the Web, an increasing number of people are interested in obtaining personalized suggestions, in order to reduce the effort of inspecting all the items in a catalog for selecting the best one according to their preferences. An automated tool capable of recommending items to users in a personalized way is defined as a \textit{recommender system}~\cite{Ricci2015}. Recommender systems were initially conceived at the beginning of the 1990s~\cite{Goldberg1992} and, nowadays, they are considered part of a research field that is independent from information retrieval~\cite{Herlocker2000}. In fact, while search engines are based on queries and, therefore, they react to user stimuli, recommender systems try to automatically identify items that could be of interest for a certain user~\cite{Balabanovic1997}.
+Due to the large variety of products and digital content available on the Web, an increasing number of people are interested in obtaining personalized suggestions, in order to reduce the effort of inspecting all the items in a catalog for selecting the best one according to their preferences. An automated tool capable of recommending items to users in a personalized way is defined as a \textit{recommender system}~\cite{Ricci2015}.
+
+Recommender systems (RS) were initially conceived at the beginning of the 1990s~\cite{Goldberg1992} and, nowadays, they are considered part of a research field that is independent from information retrieval~\cite{Herlocker2000}. In fact, while search engines are based on queries and, therefore, they react to user stimuli, recommender systems try to automatically identify items that could be of interest for a certain user~\cite{Balabanovic1997}.
 
 A popular recommendation technique, called collaborative filtering (CF), consists of learning users' preferences by only relying on their interactions with the items available in a catalog. For example, using a nearest-neighbor search or a machine learning model, it is possible to select the most relevant items for each user who has interacted enough with the system~\cite{Su2009}. An alternative approach to this problem is represented by content-based recommenders, which can generate suggestions by matching users' profiles with the features of the items~\cite{Balabanovic1997,Basu1998}. Another family of recommendation methods proposed in the literature is represented by hybrid algorithms that are capable of combining both collaborative and content-based filtering for mitigating the individual weaknesses of the previous techniques~\cite{Stai2016}.
 
@@ -55,7 +57,7 @@ We report the lessons learned using this framework for assessing the performance
 \begin{description}
 \item[RQ2.1] \added{What is the formal definition of a sequence-based recommender system?}
 \item[RQ2.2] \added{How already established metrics can be extended and adapted for evaluating a sequence-based recommender system?}
-\item[RQ2.3] \added{Against which baselines a sequence-based recommender system can be compared?}
+\item[RQ2.3] \added{Against which baseline approaches a sequence-based recommender system can be compared?}
 \end{description}
 
 For addressing~\ref{int:itm:rq3}, we introduce RecLab, an evaluation toolkit discussed in Chapter~\ref{chap:reclab} and based on RESTful APIs that can be used to overcome the problem of evaluating traditional recommenders in heterogeneous settings. In fact, because the recommenders are deployed on different servers, the evaluator does not need to know their implementation details.
