@@ -13,14 +13,6 @@ Therefore, we propose a new recommendation approach that semantically annotates 
 
 We conducted an offline study to find the best configuration of our technique for these two datasets and comparatively evaluate our approach against a Linked Data-based and some more traditional algorithms based on ratings. We performed our study in the movie, book, and music domains, and the evaluation took into account different properties of recommender systems, that is prediction accuracy (both in terms of ratings and ranking), diversity, and novelty using a multicriteria approach. In fact, as discussed in Section~\ref{soa:sec:beyond}, not only accuracy is important: recommendations that are too obvious or already known to users may not satisfy them, although they match their taste. The results showed that our method achieved the highest diversity, provided a better accuracy than the approach based on Linked Data, and increased the novelty of recommendations with respect to collaborative filtering techniques.
 
-More formally, the main aim of this chapter is to provide an answer to the following research questions.
-
-\begin{description}
-\item[RQ1] To what extent user reviews contain useful and non-trivial information about the items to recommend?
-\item[RQ2] How such information could be enriched by exploiting a Linked Data knowledge graph for generating a list of suggested items?
-\item[RQ3] Is this content-based approach more effective in terms of novelty and diversity with respect to collaborative filtering algorithms?
-\end{description}
-
 The remainder of this chapter is organized as follows. In Section~\ref{srr:sec:approach} we present our approach, while, in Section~\ref{srr:sec:eval}, we describe the evaluation method. Then, in Section~\ref{srr:sec:res}, we show the obtained results and in Section~\ref{srr:sec:discussion} we discuss them. Finally, in Section~\ref{srr:sec:concl}, we provide the conclusions.
 
 \section{Approach}
@@ -147,7 +139,7 @@ Table~\ref{srr:tab:stats} lists several statistics regarding the exploited ratin
 
 Figure~\ref{srr:fig:boxplot} displays the boxplots representing the distributions of the number of annotated entities per each item according to the domain, excluding the outliers for graphical reasons. Given the interquartile range $IQR = Q3 - Q1$, all data points not belonging to the interval $(Q1 - 1.5 \cdot IQR; Q3 + 1.5 \cdot IQR)$ are considered outliers. It is clear that movie reviews are fairly different from the other ones. This may be related to the higher ratio between reviews and items in the movie domain.
 
-We relied on a 5-fold cross-validation in order to perform the evaluations. We considered ratings positive if their score was greater than~3 on a scale from 1 to~5 for MovieLens, greater than 6 on a scale from 1 to~10 for LibraryThing, and greater than~0 for LastFM. In fact, the latter dataset contains implicit feedback, while the others are examples of explicit feedback. Exploiting the lists of the top-10 recommendations for each user, we computed the measures of precision, recall, nDCG, Entropy Based Novelty (EBN)~\cite{Bellogin2010}, and diversity~\cite{Zhang2008}.
+We relied on a 5-fold cross-validation in order to perform the evaluations. We considered ratings positive if their score was greater than~3 on a scale from 1 to~5 for MovieLens, greater than 6 on a scale from 1 to~10 for LibraryThing, and greater than~0 for LastFM. In fact, the latter dataset contains implicit feedback, while the others are examples of explicit feedback. Exploiting the lists of the top-10 recommendations for each user, we computed the measures of precision, recall, NDCG, Entropy Based Novelty (EBN)~\cite{Bellogin2010}, and diversity~\cite{Zhang2008}.
 
 For the implementation, we rely on the LibRec library.\footnote{\url{https://www.librec.net}} It computes measures according to the \emph{all unrated items} protocol \cite{Steck2013}. More specifically, it creates a top-$k$ recommendation list for each user by predicting a score for every item not rated by that particular user, whether that item appears in the user test set or not. All the non-rated items are considered to be irrelevant for the user. This explains the low values for the measures (in particular precision and recall) as the quality of recommendations tend to be underestimated. However, Steck \cite{Steck2013} suggests to rely on this protocol rather than the \emph{rated test-items}, which includes only rated test items in the top-$k$ list, as the user satisfaction regarding top-$k$ recommendations depends on the ranking of all items.
 
@@ -190,7 +182,7 @@ The best ranking function depends instead on the domain. For movies, R3 outperfo
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Conf.       & Precis.         & Recall          & nDCG            & EBN             & Divers. \\ \midrule
+Conf.       & Precis.         & Recall          & NDCG            & EBN             & Divers. \\ \midrule
 C1          & 0.0604          & 0.0399          & 0.0412          & 1.2804          & \textbf{0.2431} \\
 C2          & 0.0529          & 0.0327          & 0.0343          & 1.2776          & 0.1629  \\
 C3          & 0.0604          & 0.0399          & 0.0412          & 1.2804          & \textbf{0.2431} \\
@@ -208,7 +200,7 @@ C7          & 0.0344          & 0.0191          & 0.0243          & 0.8248      
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Conf.       & Precis.         & Recall          & nDCG            & EBN             & Divers. \\ \midrule
+Conf.       & Precis.         & Recall          & NDCG            & EBN             & Divers. \\ \midrule
 C1          & 0.0396          & 0.0350          & 0.0341          & 0.4081          & 0.7701  \\
 \textbf{C2} & \textbf{0.0506} & \textbf{0.0497} & \textbf{0.0465} & 0.2771          & 0.7780  \\
 C3          & 0.0396          & 0.0350          & 0.0341          & 0.4081          & 0.7701  \\
@@ -226,7 +218,7 @@ C8          & 0.0421          & 0.0418          & \textbf{0.0429} & 0.2077      
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Conf.       & Precis.         & Recall          & nDCG            & EBN             & Divers. \\ \midrule
+Conf.       & Precis.         & Recall          & NDCG            & EBN             & Divers. \\ \midrule
 \textbf{C1} & \textbf{0.0495} & \textbf{0.0504} & \textbf{0.0486} & 0.7894          & 0.5654  \\
 \textbf{C2} & \textbf{0.0504} & \textbf{0.0515} & \textbf{0.0473} & 0.6640          & 0.6021  \\
 \textbf{C3} & \textbf{0.0495} & \textbf{0.0504} & \textbf{0.0486} & 0.7894          & 0.5654  \\
@@ -243,11 +235,11 @@ C8          & 0.0360          & 0.0368          & 0.0378          & \textbf{0.24
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{lineplot}
-\caption[nDCG with MovieLens and Wikidata]{The nDCG score obtained by varying the number of entities considered with MovieLens and Wikidata.}
+\caption[NDCG with MovieLens and Wikidata]{The NDCG score obtained by varying the number of entities considered with MovieLens and Wikidata.}
 \label{srr:fig:lineplot}
 \end{figure}
 
-Figure~\ref{srr:fig:lineplot} illustrates the performance in terms of nDCG of the three ranking functions available in SemRevRec when the number of entities considered for the recommendation process varies. The occurrence represents the minimum number of times an entity needs to be annotated in the reviews of a certain item in order to be included in the candidate recommendation set. It is expressed as a percentage of the most annotated entity for an item. The plot is based on the results obtained in the movie domain with the Wikidata knowledge base, as this can be considered the most representative case. Unsurprisingly, all rankers tend to converge, as the number of entities available decreases. However, it is important to notice that the nDCG is monotonically decreasing. This fact happens in the majority of the domains with both knowledge bases and supports the hypothesis that the higher is the number of available entities, the better is the quality of the recommendations.
+Figure~\ref{srr:fig:lineplot} illustrates the performance in terms of NDCG of the three ranking functions available in SemRevRec when the number of entities considered for the recommendation process varies. The occurrence represents the minimum number of times an entity needs to be annotated in the reviews of a certain item in order to be included in the candidate recommendation set. It is expressed as a percentage of the most annotated entity for an item. The plot is based on the results obtained in the movie domain with the Wikidata knowledge base, as this can be considered the most representative case. Unsurprisingly, all rankers tend to converge, as the number of entities available decreases. However, it is important to notice that the NDCG is monotonically decreasing. This fact happens in the majority of the domains with both knowledge bases and supports the hypothesis that the higher is the number of available entities, the better is the quality of the recommendations.
 
 \begin{sidewaysfigure}[p]
 \centering
@@ -264,7 +256,7 @@ Table~\ref{srr:tab:ex1-wd} lists the results obtained with Wikidata. They vary s
 \centering
 \begin{tabular}{@{}llrrrrr@{}}
 \toprule
-Conf. & Domain  & Precis. & Recall & nDCG   & EBN    & Divers. \\ \midrule
+Conf. & Domain  & Precis. & Recall & NDCG   & EBN    & Divers. \\ \midrule
 C4    & Movie   & 0.0582  & 0.0368 & 0.0438 & \textbf{1.3626} & 0.1223 \\
 C6    & Movie   & 0.0757  & 0.0487 & 0.0588 & 1.4284 & \textbf{0.1461} \\
 C7    & Movie   & 0.0728  & 0.0459 & 0.0552 & 1.4322 & \textbf{0.1423} \\
@@ -289,7 +281,7 @@ C8    & Music  & 0.0367   & 0.0377 & 0.0363 & \textbf{0.3178} & \textbf{0.9322} 
 
 We compared our technique to the Most Popular, Random Guess, Item KNN, and Bayesian Personalized Ranking (BPR)~\cite{Rendle2009} algorithms, as implemented in LibRec, and with SPrank~\cite{DiNoia2016}, a state-of-the-art Linked Data-based recommender. We set the neighborhood size for Item KNN to 80, while we used 100 factors for BPR, as done by Musto et al.~\cite{Musto2016}. We configured SPrank to exploit LambdaMart as the ranking method and to follow in the DBpedia graph the same properties that we selected for our algorithm, as listed in Table~\ref{srr:tab:disc}.
 
-Table~\ref{srr:tab:ex2-ml}, Table~\ref{srr:tab:ex2-lt}, and Table~\ref{srr:tab:ex2-fm} list the results obtained in the movie, book, and music domain, respectively. The best values are highlighted in boldface.\footnote{More values are highlighted for the same measure if the differences among them are not statistically significant. In the case of EBN and diversity, when Random Guess was the best, we also highlighted the second best because its precision, recall, and nDCG were close to zero. This means that the recommendations provided are completely unrelated and their novelty and diversity are not relevant.} For SemRevRec, we reported both the configuration with the best trade-off among the various measures and the best scores achieved for each measure in the experiment described in Section~\ref{srr:sec:exp1}. In all the experimental trails, SemRevRec provided the best diversity and a better accuracy (both in rating prediction and ranking) than SPrank, while it improved in novelty with respect to traditional techniques. BPR accounted for the highest precision, recall, and nDCG. In general, the diversity is rather low for movies, while for music and books is above 0.6, apart for Item KNN.
+Table~\ref{srr:tab:ex2-ml}, Table~\ref{srr:tab:ex2-lt}, and Table~\ref{srr:tab:ex2-fm} list the results obtained in the movie, book, and music domain, respectively. The best values are highlighted in boldface.\footnote{More values are highlighted for the same measure if the differences among them are not statistically significant. In the case of EBN and diversity, when Random Guess was the best, we also highlighted the second best because its precision, recall, and NDCG were close to zero. This means that the recommendations provided are completely unrelated and their novelty and diversity are not relevant.} For SemRevRec, we reported both the configuration with the best trade-off among the various measures and the best scores achieved for each measure in the experiment described in Section~\ref{srr:sec:exp1}. In all the experimental trails, SemRevRec provided the best diversity and a better accuracy (both in rating prediction and ranking) than SPrank, while it improved in novelty with respect to traditional techniques. BPR accounted for the highest precision, recall, and NDCG. In general, the diversity is rather low for movies, while for music and books is above 0.6, apart for Item KNN.
 
 The differences between SemRevRec and the other approaches are statistically significant according to the Welch's \emph{t}-test with \emph{p}~<~0.001, except for SPrank, BRP, Most Popular, and Random Guess in the movie domain regarding the measure of diversity, SPrank in the book domain regarding the measures of precision and diversity, and Most Popular in the music domain regarding the measure of diversity.
 
@@ -297,7 +289,7 @@ The differences between SemRevRec and the other approaches are statistically sig
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Algorithm & Precis. & Recall & nDCG   & EBN    & Divers. \\ \midrule
+Algorithm & Precis. & Recall & NDCG   & EBN    & Divers. \\ \midrule
 SemRevRec & 0.0857  & 0.0561 & 0.0686 & 1.4188 & 0.1513 \\
 -- Best Scores & 0.0857 & 0.0561 & 0.0686 & \textbf{0.7820} & \textbf{0.2431} \\ \midrule
 SPrank    & 0.0445  & 0.0254 & 0.0280 & 0.8813 & 0.1612 \\
@@ -314,7 +306,7 @@ Random    & 0.0055  & 0.0028 & 0.0031 & \textbf{0.3018} & 0.1679 \\ \bottomrule
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Algorithm & Precis. & Recall & nDCG   & EBN    & Divers. \\ \midrule
+Algorithm & Precis. & Recall & NDCG   & EBN    & Divers. \\ \midrule
 SemRevRec & 0.0530  & 0.0530 & 0.0536 & 0.2318 & 0.8846 \\
 -- Best Scores & 0.0530  & 0.0530 & 0.0536 & 0.1946 & \textbf{0.9118} \\ \midrule
 SPrank    & 0.0379  & 0.0346 & 0.0337 & \textbf{0.1562} & 0.8037 \\
@@ -331,7 +323,7 @@ Random    & 0.0004  & 0.0002 & 0.0003 & \textbf{0.0382} & \textbf{0.9879} \\ \bo
 \centering
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Algorithm & Precis. & Recall & nDCG   & EBN    & Divers. \\ \midrule
+Algorithm & Precis. & Recall & NDCG   & EBN    & Divers. \\ \midrule
 SemRevRec & 0.0536  & 0.0549 & 0.0502 & 0.6319 & 0.6168 \\
 -- Best Scores & 0.0536  & 0.0549 & 0.0502 & 0.2411 & \textbf{0.9329} \\ \midrule
 SPrank    & 0.0156  & 0.0158 & 0.0176 & \textbf{0.1834} & 0.9077 \\
@@ -351,7 +343,7 @@ In general, the results obtained by our algorithm in the music and book domains 
 
 In this work, we relied on all the reviews available for the items present in the rating datasets used for the evaluation. However, only reviews about some items, for example the ones with the average rating higher than a threshold, or only some reviews for each item, for example only the ones that are rated positively, could be considered during the semantic annotation phase. Nevertheless, lower performance on music artists and books was expected because the available ratings were more sparse than the ones regarding movies. This holds for all the algorithms and explains the general difference of scores in these domains. 
 
-SemRevRec showed the best diversity. In the sparse dataset of books, it achieved precision, recall, and nDCG comparable to Item KNN with a much higher diversity, although the former is a content-based method. Collaborative filtering techniques are known to suffer less of the overspecilization problem and provide better rating prediction and ranking than content-based ones. For this reason, although collaborative filtering is very popular, we decided to include in the baseline a technique among many, that is BPR, one of the newest and most promising. Nevertheless, it showed a lower diversity than our algorithm. Not surprisingly, it also accounted for the best rating prediction and ranking. 
+SemRevRec showed the best diversity. In the sparse dataset of books, it achieved precision, recall, and NDCG comparable to Item KNN with a much higher diversity, although the former is a content-based method. Collaborative filtering techniques are known to suffer less of the overspecilization problem and provide better rating prediction and ranking than content-based ones. For this reason, although collaborative filtering is very popular, we decided to include in the baseline a technique among many, that is BPR, one of the newest and most promising. Nevertheless, it showed a lower diversity than our algorithm. Not surprisingly, it also accounted for the best rating prediction and ranking. 
 
 Our approach also provided a higher novelty than traditional techniques and a better rating prediction and ranking than SPrank. In the movie domain, SemRevRec accounted for the best novelty, while with music and books for the second best, with results close to SPrank. Additionally, when optimized for this measure, SemRevRec had similar or higher rating prediction and ranking than SPrank. On the contrary, when the former is optimized for rating prediction and ranking, it could be preferred to the latter to increase the novelty of recommendations, while also limiting the loss in rating prediction and ranking.
 
