@@ -104,7 +104,7 @@ In fact, we claim that a synthetic dataset can be successfully used during an ev
 
 Furthermore, we investigated what is the impact of the parameter $K$ on the results of the evaluation, in order to understand how to empirically select the most appropriate value for it.
 
-In our experiments, we utilized Random, Most Popular, User KNN, BPRMF, and WRMF recommendation algorithms and the metrics of precision, recall, and NDCG as defined in the evaluation framework RecLab discussed in Chapter~\ref{chap:reclab}. Regarding the user preferences, we exploited the binarized versions of the MovieLens~100K, MovieLens~1M, and LastFM~\cite{Cantador2011} datasets. We considered as positive all ratings with a value higher than $3$ for MovieLens and than $0$ for LastFM. We relied on the default values of the evaluation framework for all other experimental parameters: we followed a random splitting protocol with a test set size equal to the $20\%$ of all available ratings and we recommended $10$ items for each test user.
+In our experiments, we utilized Random, Most Popular, User KNN, BPRMF, and WRMF recommendation algorithms and the metrics of precision, recall, and nDCG as defined in the evaluation framework RecLab discussed in Chapter~\ref{chap:reclab}. Regarding the user preferences, we exploited the binarized versions of the MovieLens~100K, MovieLens~1M, and LastFM~\cite{Cantador2011} datasets. We considered as positive all ratings with a value higher than $3$ for MovieLens and than $0$ for LastFM. We relied on the default values of the evaluation framework for all other experimental parameters: we followed a random splitting protocol with a test set size equal to the $20\%$ of all available ratings and we recommended $10$ items for each test user.
 
 From the aforementioned reference datasets we generated their synthetic versions exploiting the procedure described in Section~\ref{syn:sec:generation}. We considered $U$ equal to the number of users originally available, in order to compare datasets of similar size. Furthermore, we also created three baseline synthetic collections with the same number of ratings by not applying the user clustering phase. All the users of such baselines exhibit the same rating behavior, similarly to the approach described in~\cite{CarmenRodriguez-Hernandez2017}. In Table~\ref{syn:tab:stats}, we report different statistics regarding the baseline, generated, and reference datasets.
 
@@ -163,7 +163,7 @@ Therefore, we can provide an answer to \ref{syn:itm:rq1} by observing that the i
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.009416 & 0.008877 & 0.009841 \\
 Most Popular & 0.060065 & 0.053209 & 0.064384 \\
 User KNN & 0.055952 & 0.050587 & 0.058744 \\
@@ -177,7 +177,7 @@ WRMF & 0.047078 & 0.042876 & 0.048104 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.009847 & 0.008977 & 0.010022 \\
 Most Popular & 0.099672 & 0.083875 & 0.110229 \\
 User KNN & 0.154158 & 0.135917 & 0.169499 \\
@@ -191,7 +191,7 @@ WRMF & 0.164114 & 0.144272 & 0.173916 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.007743 & 0.006300 & 0.008183 \\
 Most Popular & 0.112759 & 0.102804 & 0.130632 \\
 User KNN & 0.205234 & 0.221684 & 0.233362 \\
@@ -209,7 +209,7 @@ WRMF & 0.221592 & 0.233235 & 0.250386 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.004989 & 0.002733 & 0.004803 \\
 Most Popular & 0.066483 & 0.037723 & 0.068991 \\
 User KNN & 0.064708 & 0.035976 & 0.066573 \\
@@ -223,7 +223,7 @@ WRMF & 0.053022 & 0.027763 & 0.055035 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.005712 & 0.002678 & 0.005580 \\
 Most Popular & 0.101570 & 0.061565 & 0.107356 \\
 User KNN & 0.129113 & 0.078716 & 0.136779 \\
@@ -237,7 +237,7 @@ WRMF & 0.133723 & 0.080045 & 0.140670 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.005589 & 0.002862 & 0.005657 \\
 Most Popular & 0.131982 & 0.082978 & 0.142782 \\
 User KNN & 0.232082 & 0.172290 & 0.262018 \\
@@ -255,7 +255,7 @@ WRMF & 0.227878 & 0.154425 & 0.252999 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.000691 & 0.000656 & 0.000869 \\
 Most Popular & 0.046281 & 0.046513 & 0.048636 \\
 User KNN & 0.042614 & 0.043088 & 0.044308 \\
@@ -269,7 +269,7 @@ WRMF & 0.032731 & 0.032974 & 0.033975 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.000532 & 0.000520 & 0.000548 \\
 Most Popular & 0.052844 & 0.054597 & 0.056285 \\
 User KNN & 0.101435 & 0.104549 & 0.113433 \\
@@ -283,7 +283,7 @@ WRMF & 0.090324 & 0.092860 & 0.099598 \\ \bottomrule
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Algorithm & Precision & Recall & NDCG \\ \midrule
+Algorithm & Precision & Recall & nDCG \\ \midrule
 Random & 0.000797 & 0.000825 & 0.000791 \\
 Most Popular & 0.067906 & 0.068970 & 0.075406 \\
 User KNN & 0.156057 & 0.160451 & 0.189487 \\

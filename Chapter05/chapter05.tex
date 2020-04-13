@@ -81,8 +81,8 @@ Because also the recommendation phase may be time consuming, it is considered as
 
 In order to better analyze the recommender systems under evaluation from different perspectives, we decided to include in RecLab a comprehensive set of seven different metrics. In fact, it is not possible to accurately evaluate in an offline experiment a set of recommenders by only relying on a single indicator~\cite{Herlocker2004}. In addition to traditional metrics such as coverage and precision, we propose less widespread ones like novelty, diversity, and serendipity.
 
-% + Recall, nDPM -> NDCG, - Confidence, - Perplexity
-These metrics are similar to the ones introduced in Section~\ref{seq:sec:metrics}, but while the latter were designed to evaluate sequences of recommended items, the former are more appropriate for ranked lists of suggestions. We added to RecLab the popular metric of recall, which was not really meaningful in the context of sequence-based recommenders. Furthermore, the metric of nDPM was put aside in favor of NDCG, as it seemed more appropriate to characterize the raking of a list. Finally, we did not consider the metrics of confidence and perplexity, as they would require the recommender systems to also provide a probability for each suggested item, which is beyond the scope of our evaluation framework. This multicriteria set is not final, as RecLab can be easily expanded in order to compute additional metrics that the community considers useful.
+% + Recall, nDPM -> nDCG, - Confidence, - Perplexity
+These metrics are similar to the ones introduced in Section~\ref{seq:sec:metrics}, but while the latter were designed to evaluate sequences of recommended items, the former are more appropriate for ranked lists of suggestions. We added to RecLab the popular metric of recall, which was not really meaningful in the context of sequence-based recommenders. Furthermore, the metric of nDPM was put aside in favor of nDCG, as it seemed more appropriate to characterize the raking of a list. Finally, we did not consider the metrics of confidence and perplexity, as they would require the recommender systems to also provide a probability for each suggested item, which is beyond the scope of our evaluation framework. This multicriteria set is not final, as RecLab can be easily expanded in order to compute additional metrics that the community considers useful.
 
 In the following, we define $\mathcal{U}$ as the set users $\upsilon \in \mathcal{U}$, $\mathcal{I}$ as the set of items $\iota \in \mathcal{I}$, and $\mathcal{R}$ as the set of ratings $\rho \in \mathcal{R}$. Furthermore, we define $rec(\upsilon, k)$ as the list of the top-$k$ items recommended to user $\upsilon$ and $ref(\upsilon)$ as the set of items rated positively by user $\upsilon$ in the test set $\mathcal{R}_{test}$.
 
@@ -113,7 +113,7 @@ Complementary to precision, recall represents the fraction of relevant documents
 
 If the set of items rated positively by a user is empty, we assume that the recall for that user is $0$ by definition.
 
-\subsection{NDCG}
+\subsection{nDCG}
 The Normalized Discounted Cumulative Gain is another information retrieval metric, that also considers a logarithmic gain related to the position of each correctly predicted item~\cite{Jaervelin2002}. This metric reveals if a recommender is capable of correctly predicting items at the top of the list.
 
 \begin{equation*}
@@ -160,7 +160,7 @@ Where $prim(k)$ is the set of the top-$k$ most popular items available in the tr
 \centering
 \begin{tabular}{@{}llllllll@{}}
 \toprule
-Algorithm    & Coverage & Precision & Recall   & NDCG     & Novelty  & Diversity & Serendipity \\ \midrule
+Algorithm    & Coverage & Precision & Recall   & nDCG     & Novelty  & Diversity & Serendipity \\ \midrule
 Random       & 1.000000 & 0.005152  & 0.002526 & 0.005069 & 13.37526 & 0.966485  & 0.005003    \\
 Most Popular & 0.017920 & 0.145146  & 0.084294 & 0.158512 & 8.580345 & 0.600524  & 0.071869    \\
 Item KNN     & 0.473527 & 0.212028  & 0.137608 & 0.224146 & 10.55504 & 0.788987  & 0.196637    \\
@@ -175,7 +175,7 @@ WRMF         & 0.120554 & 0.258400  & 0.169925 & 0.287808 & 9.138422 & 0.667673 
 
 \begin{tabular}{@{}llllllll@{}}
 \toprule
-Algorithm    & Coverage & Precision & Recall   & NDCG     & Novelty  & Diversity & Serendipity \\ \midrule
+Algorithm    & Coverage & Precision & Recall   & nDCG     & Novelty  & Diversity & Serendipity \\ \midrule
 Random       & 0.993719 & 0.017555  & 0.002910 & 0.017394 & 13.41860 & 0.963699  & 0.016938    \\
 Most Popular & 0.037411 & 0.257487  & 0.053148 & 0.273653 & 8.546251 & 0.528352  & 0.066517    \\
 Item KNN     & 0.344894 & 0.231296  & 0.056491 & 0.244158 & 9.759138 & 0.670575  & 0.095962    \\
@@ -191,7 +191,7 @@ WRMF         & 0.136537 & 0.276164  & 0.065600 & 0.297178 & 8.941997 & 0.587175 
 \centering
 \begin{tabular}{@{}llllllll@{}}
 \toprule
-Algorithm    & Coverage & Precision & Recall   & NDCG     & Novelty  & Diversity & Serendipity \\ \midrule
+Algorithm    & Coverage & Precision & Recall   & nDCG     & Novelty  & Diversity & Serendipity \\ \midrule
 Random       & 0.708420 & 0.000584  & 0.000632 & 0.000623 & 15.30801 & 0.998417  & 0.000584    \\
 Most Popular & 0.001692 & 0.066773  & 0.069242 & 0.076932 & 7.736651 & 0.632728  & 0.019161    \\
 Item KNN     & 0.235489 & 0.126168  & 0.131249 & 0.143234 & 12.56312 & 0.774870  & 0.101486    \\
@@ -211,13 +211,13 @@ In the second experiment, we changed the splitting protocol to the timestamp-bas
 
 Finally, for performing the third experiment, we selected the HetRec LastFM dataset. All other parameters are the same of the first experiment, but the rating threshold, which is now equal to $0$. The results of this last experiment are reported in Table~\ref{lab:tab:lastfm}.
 
-As expected, the random recommender always achieves the best coverage, novelty, and diversity, while also obtaining the worst precision, recall, NDCG, and serendipity. On the other hand, the most popular recommender has a very low coverage and novelty, but it also has interesting values of precision and NDCG, especially with the MovieLens dataset. Note its impressive increase in terms of precision obtained by simply changing the splitting protocol.
+As expected, the random recommender always achieves the best coverage, novelty, and diversity, while also obtaining the worst precision, recall, nDCG, and serendipity. On the other hand, the most popular recommender has a very low coverage and novelty, but it also has interesting values of precision and nDCG, especially with the MovieLens dataset. Note its impressive increase in terms of precision obtained by simply changing the splitting protocol.
 
 The measures of serendipity are not exactly zero because this implementation of the most popular recommender suggests a \emph{personalized} list of popular items, avoiding the ones already rated by the same user in the training set.
 
 If we ignore the random suggestions, the Item KNN recommender obtains the best results in terms of coverage, novelty, and diversity in all the experiments. Regarding the metric of precision, we observe interesting results with the User KNN recommender in the first experiment, with the User KNN and the WRMF in the second one, and with the WRMF in the last one. We observe a dramatic decrease in precision of the BPRMF recommender in the LastFM experiment, probably due to the characteristics of the dataset.
 
-In the last experiment, the WRMF algorithm achieves the best values of precision, recall, NDCG, and serendipity. However, it also scores a very low coverage; in contrast, the Item KNN recommender has a fair precision and an interesting coverage. For this reason, it would be useful to compare these algorithms in an online experiment involving human subjects.
+In the last experiment, the WRMF algorithm achieves the best values of precision, recall, nDCG, and serendipity. However, it also scores a very low coverage; in contrast, the Item KNN recommender has a fair precision and an interesting coverage. For this reason, it would be useful to compare these algorithms in an online experiment involving human subjects.
 
 \added{The availability of different evaluation metrics was of paramount importance to reach these conclusions, which represent our answer to~\ref{lab:itm:rq3}.}
 

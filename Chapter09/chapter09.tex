@@ -155,7 +155,7 @@ For optimizing the hyper-parameters of the RNN, we executed a grid search on a d
 \item hidden layer size: $hl = \{50,\ 100\}$ 
 \end{itemize}
 
-For each configuration $(opt,\ lr,\ ns,\ hl)$, we trained the RNN model and we measured its perplexity on a validation set consisting of 1,000 playlists. Furthermore, we measured its R-Precision, NDCG, and Click metrics as defined in the challenge rules on a separate test set of the same size. The validation and test sets used for optimization purposes contain playlists with the first 5 tracks available as the initial seed, while the others are hidden.
+For each configuration $(opt,\ lr,\ ns,\ hl)$, we trained the RNN model and we measured its perplexity on a validation set consisting of 1,000 playlists. Furthermore, we measured its R-Precision, nDCG, and Click metrics as defined in the challenge rules on a separate test set of the same size. The validation and test sets used for optimization purposes contain playlists with the first 5 tracks available as the initial seed, while the others are hidden.
 
 We considered a total of 48 possible configurations: the values of perplexity of the most significant ones are reported in Table~\ref{rnn:tab:rnn_opt}. Perplexity measures the `surprise' of the probabilistic model in observing the data and it is defined as $s^{L}$ where $L$ is the cross-entropy loss function. Thus, lower values of perplexity corresponds to better models. We observe that, when the hidden size is fixed, the best performing optimizer is ADAM. Furthermore, increasing the number of steps reduces the perplexity of the RNN, but it does not have a significant effect on the R-Prec.
 
@@ -227,7 +227,7 @@ Table~\ref{rnn:tab:approaches} contains the results obtained on our test set by 
 \centering
 \begin{tabular}{@{}llllll@{}}
 \toprule
-Approach    & Optimizer & Epoch & R-Prec.     & NDCG   & Click   \\ \midrule
+Approach    & Optimizer & Epoch & R-Prec.     & nDCG   & Click   \\ \midrule
 Title2Rec   & -         & -     & 0.0837      & 0.1260 & 12.007  \\
 Word2Rec    & -         & -     & 0.0963      & 0.1444 & 8.4322  \\
 RNN 300     & Gradient  & 1     & 0.1417      & 0.1621 & 4.1902  \\
@@ -256,7 +256,7 @@ Table~\ref{rnn:tab:ensemble} lists the results computed on our test set for the 
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Track    & R-Precision & NDCG   & Click  \\ \midrule
+Track    & R-Precision & nDCG   & Click  \\ \midrule
 Main     & 0.1611      & 0.1710 & 3.6349 \\
 Creative & 0.1634      & 0.1717 & 3.5964 \\ \bottomrule
 \end{tabular}

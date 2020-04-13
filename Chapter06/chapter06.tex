@@ -90,14 +90,14 @@ In the first one, we set the rating threshold equal to 0, while in the second on
 
 We considered different recommendation approaches, namely the most popular and random baselines and the MyMediaLite~\cite{Gantner2011} implementations of the Item KNN, User KNN, BPRMF, and WRMF recommender systems using their default settings.
 
-We computed the metrics of coverage, precision, recall, and NDCG. The results of these experiments are reported in Table~\ref{viz:tab:experiment}. The same datasets obtained from HetRec LastFM by varying the rating threshold were exploited for creating two scatter plots using RS-viz, as displayed in Figure~\ref{viz:fig:lastfm}.
+We computed the metrics of coverage, precision, recall, and nDCG. The results of these experiments are reported in Table~\ref{viz:tab:experiment}. The same datasets obtained from HetRec LastFM by varying the rating threshold were exploited for creating two scatter plots using RS-viz, as displayed in Figure~\ref{viz:fig:lastfm}.
 
 \begin{table}
 \begin{subfigure}{\textwidth}
 \centering
 \begin{tabular}{@{}lllll@{}}
 \toprule
-Algorithm & Coverage & Precision & Recall & NDCG \\ \midrule
+Algorithm & Coverage & Precision & Recall & nDCG \\ \midrule
 Random & 0.706679 & 0.000798 & 0.000745 & 0.000858 \\
 Most Popular & 0.001692 & 0.071170 & 0.071480 & 0.079673 \\
 Item KNN & 0.235321 & 0.129362 & 0.131967 & 0.145258 \\
@@ -112,7 +112,7 @@ WRMF & 0.015558 & 0.159947 & 0.162332 & 0.195107 \\ \bottomrule
 \centering
 \begin{tabular}{@{}lllll@{}}
 \toprule
-Algorithm & Coverage & Precision & Recall & NDCG \\ \midrule
+Algorithm & Coverage & Precision & Recall & nDCG \\ \midrule
 Random & 0.705562 & 0.000107 & 0.000622 & 0.000133 \\
 Most Popular & 0.001684 & 0.022122 & 0.090233 & 0.027437 \\
 Item KNN & 0.107233 & 0.002878 & 0.013012 & 0.002686 \\
