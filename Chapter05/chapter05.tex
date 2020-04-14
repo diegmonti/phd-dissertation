@@ -64,7 +64,7 @@ Furthermore, we have included the MyMediaLite~\cite{Gantner2011} implementations
 \label{lab:fig:sequence}
 \end{figure}
 
-RecLab is a distributed evaluation framework. For this reason, it exploits consolidated web standards to create a communication channel among itself and the recommenders under analysis: the overall protocol is graphically depicted as a UML sequence diagram in Figure~\ref{lab:fig:sequence} \added{and it represents our answer to~\ref{lab:itm:rq1}}. This interaction is initiated when the experimenter decides to execute a new evaluation, and it is repeated for every recommender selected as part of it.
+RecLab is a distributed evaluation framework. For this reason, it exploits consolidated web standards to create a communication channel among itself and the recommenders under analysis: the overall protocol is graphically depicted as a UML sequence diagram in Figure~\ref{lab:fig:sequence} \added{and it represents our answer to}~\ref{lab:itm:rq1}. This interaction is initiated when the experimenter decides to execute a new evaluation, and it is repeated for every recommender selected as part of it.
 
 First, the evaluator requests the recommender to train a new recommendation model with a \textsc{post} on the resource \texttt{/model}. It provides to the recommender a URI from which it can download the training set and the rating threshold, as specified by the experimenter. Only the ratings with a value strictly greater than the threshold should be considered as positive feedbacks.
 
@@ -203,7 +203,7 @@ WRMF         & 0.015617 & 0.164809  & 0.170302 & 0.201023 & 8.849644 & 0.763729 
 \label{lab:tab:lastfm}
 \end{sidewaystable}
 
-To prove the effectiveness of RecLab, we performed three different experiments with the recommender systems described in Section~\ref{lab:sec:framework} whose implementation details are available in our repository, \added{in line with~\ref{lab:itm:rq2}}.
+To prove the effectiveness of RecLab, we performed three different experiments with the recommender systems described in Section~\ref{lab:sec:framework} whose implementation details are available in our repository, \added{in line with}~\ref{lab:itm:rq2}.
 
 In the first one, we selected the MovieLens 1M dataset and we chose a random splitting protocol. For the other parameters, we used the default values of the framework: the test set size is the 20\% of the dataset, the length $k$ of the recommended lists is equal to $10$, while the rating threshold is equal to $3$. The results of this first experiment are reported in Table~\ref{lab:tab:movielens-random}.
 
@@ -219,7 +219,7 @@ If we ignore the random suggestions, the Item KNN recommender obtains the best r
 
 In the last experiment, the WRMF algorithm achieves the best values of precision, recall, nDCG, and serendipity. However, it also scores a very low coverage; in contrast, the Item KNN recommender has a fair precision and an interesting coverage. For this reason, it would be useful to compare these algorithms in an online experiment involving human subjects.
 
-\added{The availability of different evaluation metrics was of paramount importance to reach these conclusions, which represent our answer to~\ref{lab:itm:rq3}.}
+\added{The availability of different evaluation metrics was of paramount importance to reach these conclusions, which represent our answer to}~\ref{lab:itm:rq3}.
 
 \section{Conclusion}
 \label{lab:sec:conclusion}
