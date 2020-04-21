@@ -98,7 +98,7 @@ As mentioned earlier, we address the problem of playlist continuation as a langu
 
 We experiment three different strategies to generate track predictions from the RNN. Given an input seed and the hidden state, the trained model outputs the logits $p_i$, i.e. un-normalized scores that are proportional to the probability that a given track appears after the sequence of seeds $s$. In details, we considered the following approaches, as depicted in Figure~\ref{rnn:fig:predictions}.
 
-\begin{description}
+\begin{description}[font=\tt]
 \item[do\_sample] It samples the track with the highest logit $p_i$, where $\hat{i} = arg\ max ({p_i})$, given the set of seeds $s$. It adds the sampled track $\hat{i}$ to the seeds $s$, then it repeats the previous operations until 500 tracks are sampled.
 \item[do\_rank] It ranks the tracks according to their logit value $p_i$, given all the seeds $s$, then it selects the top-500 tracks with the highest logit.
 \item[do\_summed\_rank] It computes the logits $p_i$ for every seed. It averages all the logits in the sequence obtaining $\hat{p_i}$ and then it ranks the tracks according to the values of $\hat{p_i}$.
@@ -108,17 +108,17 @@ We experiment three different strategies to generate track predictions from the 
 \centering
 \begin{subfigure}{.8\textwidth}
 \includegraphics[width=\textwidth]{sample}
-\caption{do\_sample}
+\caption{\texttt{do\_sample}}
 \bigskip
 \end{subfigure}
 \begin{subfigure}{.8\textwidth}
 \includegraphics[width=\textwidth]{rank}
-\caption{do\_rank}
+\caption{\texttt{do\_rank}}
 \bigskip
 \end{subfigure}
 \begin{subfigure}{.8\textwidth}
 \includegraphics[width=\textwidth]{summed}
-\caption{do\_summed\_rank}
+\caption{\texttt{do\_summed\_rank}}
 \end{subfigure}
 \caption[Strategies for generating track predictions]{Our three strategies for generating track predictions.}
 \label{rnn:fig:predictions}
